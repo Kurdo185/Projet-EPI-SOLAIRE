@@ -51,6 +51,7 @@ class Modele{
  * @param $mdp
  * @return $verif
 */
+<<<<<<< HEAD
 	public function testConnexionEmploye($login, $mdp){
 		$req = "select count(*) as nb from Employe where Employe.Login='$login' and Employe.mdp='$mdp'";
 		$rs = Modele::$monPdo->query($req);
@@ -58,6 +59,17 @@ class Modele{
 		$res = $ligne['nb'];
 		return $res;
 	}
+=======
+public function testConnexionEmploye($login, $mdp){
+        $mdpHash = sha1($mdp);
+        $req = "select count(*) as nb 
+                from Employe 
+                where Employe.Login='$login' and Employe.mdp='$mdpHash'";
+        $rs = Modele::$monPdo->query($req);
+        $ligne = $rs->fetch();
+        return $ligne['nb'];
+    }
+>>>>>>> 5c81264 (Hasher le MDP)
 	
 /**
  * Retourne les informations d'un employe
@@ -66,6 +78,7 @@ class Modele{
  * @param $mdp
  * @return l'idEmploye, le nom et le prénom sous la forme d'un tableau associatif 
 */
+<<<<<<< HEAD
 	public function getInfosEmploye($login, $mdp){
 		$req = "select Employe.idEmploye as id, Employe.Nom as nom, Employe.Prenom as prenom from Employe 
 		where Employe.login='$login' and Employe.MDP='$mdp'";
@@ -73,6 +86,17 @@ class Modele{
 		$ligne = $rs->fetch();
 		return $ligne;
 	}
+=======
+   public function getInfosEmploye($login, $mdp){
+        $mdpHash = sha1($mdp);
+        $req = "select Employe.idEmploye as id, Employe.Nom as nom, Employe.Prenom as prenom 
+                from Employe 
+                where Employe.login='$login' and Employe.MDP='$mdpHash'";
+        $rs = Modele::$monPdo->query($req);
+        $ligne = $rs->fetch();
+        return $ligne;
+    }
+>>>>>>> 5c81264 (Hasher le MDP)
 
 /**
  * Retourne les informations d'un employe à partir de son id

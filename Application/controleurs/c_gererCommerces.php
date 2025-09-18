@@ -31,6 +31,22 @@ switch($action){
 		include("vues/v_ajoutCommerce.php");
 		break;
 	}
+case 'modifierPrix': {
+	$idCommerce = $_REQUEST['id'];
+	$nouveauPrix = $_REQUEST['prix'];
+	$pdo->modifierPrix($idCommerce, $nouveauPrix);
+	$lesCommerces = $pdo->getLesCommerces();
+	include("vues/v_listeCommerces.php");
+	include("vues/v_ajoutCommerce.php");
+	break;
+}
+
+case 'exportPDF': {
+	$lesCommerces = $pdo->getLesCommerces();
+	genererPDFCommerces($lesCommerces);
+	break;
+}
+
 
 }
 

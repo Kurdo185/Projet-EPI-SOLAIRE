@@ -10,7 +10,10 @@ switch($action){
 	}
 	case 'valideConnexion':{
 		$login = $_REQUEST['login'];
+
 		$mdp = $_REQUEST['mdp'];
+		$mdp = sha1($mdp);
+
 		$verif = $pdo->testConnexionEmploye($login,$mdp);
 		if($verif == 0){
 			ajouterErreur("Login ou mot de passe incorrect");

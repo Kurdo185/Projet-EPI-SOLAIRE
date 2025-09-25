@@ -15,10 +15,10 @@
  */
 
 class Modele{   		
-      	private static $serveur = 'mysql:host=172.16.203.112';
+      	private static $serveur = 'mysql:host=localhost';
       	private static $bdd = 'dbname=getcet';   		
-      	private static $user = 'sio' ;    		
-      	private static $mdp = 'slam' ;	
+      	private static $user = 'root' ;    		
+      	private static $mdp = '' ;	
 		private static $monPdo;
 		private static $monModele = null;
 /**
@@ -120,6 +120,31 @@ class Modele{
  * @param $cp
  * @param $ville
 */
+
+/**
+ * Ajouter un acheteur dont les infos sont passées en arguments
+ * @param $idHabitant
+ * @param $idFoyer
+ * @param $tel
+ * @param $mail
+ * @param $justifIdentite
+ * @param $justifDomicile
+ */
+public function ajouterAcheteur($idHabitant, $idFoyer, $tel, $mail, $justifIdentite, $justifDomicile){
+    $statut = ($justifIdentite == 1 && $justifDomicile == 1) ? 'valide' : 'en_attente';
+
+    $req = "INSERT INTO acheteur (idHabitant, idFoyer, telephone, mail, justificatif_identite, justificatif_domicile, statut)
+            VALUES ($idHabitant, $idFoyer,
+                    " . Modele::$monPdo->quote($tel) . ",
+                    " . Modele::$monPdo->quote($mail) . ",
+                    $justifIdentite, $justifDomicile,
+                    " . Modele::$monPdo->quote($statut) . ")";
+    Modele::$monPdo->exec($req);
+}
+
+
+
+
 	public function ajouterUnCommerce($nom, $rue, $cp, $ville){
 		$req = "Insert into commerce (nom, rue, codePostal, ville) values ('$nom', '$rue', '$cp', '$ville'); ";
 		Modele::$monPdo->exec($req);
